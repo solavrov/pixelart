@@ -51,6 +51,8 @@ class Movie:
             f.write_gif(filename + str(i))
 
     def __add__(self, other):
+        if other is None:
+            return self
         m = Movie(self.w, self.h, fps=self.fps)
         for i, f in enumerate(self.film):
             m.add_frame(f + other.film[i])
@@ -67,6 +69,3 @@ class Movie:
         for i, f in enumerate(self.film):
             m.add_frame(f % other.film[i])
         return m
-
-
-
