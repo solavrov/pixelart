@@ -6,151 +6,154 @@ from Clr import Clr
 from numpy import array
 
 
-pulsar_params_1 = {
+def get_pulsar_params_1(size):
+    return {
 
-    "times": array(range(64)) / 2,
-    "fps": 20,
-    "w": 64,
-    "h": 64,
+        "times": array(range(64)) / 2,
+        "fps": 20,
+        "w": size,
+        "h": size,
 
-    "pulsars": (
+        "pulsars": (
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": 2 * pi / 16, "center": 2 * pi / 32},
-            "shift": {"x": 16, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": 2 * pi / 16, "center": 2 * pi / 32},
+                "shift": {"x": size / 64, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 2 * pi / 32},
-            "shift": {"x": -16, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 2 * pi / 32},
+                "shift": {"x": -size / 4, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": 2 * pi / 16, "center": 2 * pi / 32},
-            "shift": {"x": 0, "y": 16},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        },
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": 2 * pi / 16, "center": 2 * pi / 32},
+                "shift": {"x": 0, "y": size / 4},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 2 * pi / 32},
-            "shift": {"x": 0, "y": -16},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        },
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 2 * pi / 32},
+                "shift": {"x": 0, "y": -size / 4},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 0},
-            "shift": {"x": 0, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 0},
+                "shift": {"x": 0, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 0},
-            "shift": {"x": 0, "y": 0},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        }
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 16, "center": 0},
+                "shift": {"x": 0, "y": 0},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            }
 
-    )
+        )
 
-}
+    }
 
-pulsar_params_2 = {
 
-    "times": (array(range(64)) + 43) / 2,
-    "fps": 20,
-    "w": 64,
-    "h": 64,
+def get_pulsar_params_2(size):
+    return {
 
-    "pulsars": (
+        "times": (array(range(64)) + 43) / 2,
+        "fps": 20,
+        "w": size,
+        "h": size,
 
-        {
-            "scale": {"x": 4, "y": 4},
-            "omega": {"pulse": 2 * pi / 16, "self": -2 * pi / 4, "center": -2 * pi / 32},
-            "shift": {"x": 20, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+        "pulsars": (
 
-        {
-            "scale": {"x": 4, "y": 4},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
-            "shift": {"x": -20, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+            {
+                "scale": {"x": size / 16, "y": size / 16},
+                "omega": {"pulse": 2 * pi / 16, "self": -2 * pi / 4, "center": -2 * pi / 32},
+                "shift": {"x": 5 * size / 16, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-        {
-            "scale": {"x": 4, "y": 4},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
-            "shift": {"x": 0, "y": 20},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        },
+            {
+                "scale": {"x": size / 16, "y": size / 16},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
+                "shift": {"x": -5 * size / 16, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-        {
-            "scale": {"x": 4, "y": 4},
-            "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
-            "shift": {"x": 0, "y": -20},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        },
+            {
+                "scale": {"x": size / 16, "y": size / 16},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
+                "shift": {"x": 0, "y": 5 * size / 16},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 16, "self": 2 * pi / 8, "center": 0},
-            "shift": {"x": 0, "y": 0},
-            "phase": 0,
-            "clr_min": Clr.k,
-            "clr_max": Clr.g,
-            "clr_mid": Clr.r
-        },
+            {
+                "scale": {"x": size / 16, "y": size / 16},
+                "omega": {"pulse": 2 * pi / 32, "self": -2 * pi / 4, "center": -2 * pi / 32},
+                "shift": {"x": 0, "y": -5 * size / 16},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            },
 
-        {
-            "scale": {"x": 8, "y": 8},
-            "omega": {"pulse": 2 * pi / 16, "self": 2 * pi / 8, "center": 0},
-            "shift": {"x": 0, "y": 0},
-            "phase": pi / 2,
-            "clr_min": Clr.k,
-            "clr_max": Clr.r,
-            "clr_mid": Clr.b
-        }
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 16, "self": 2 * pi / 8, "center": 0},
+                "shift": {"x": 0, "y": 0},
+                "phase": 0,
+                "clr_min": Clr.k,
+                "clr_max": Clr.g,
+                "clr_mid": Clr.r
+            },
 
-    )
+            {
+                "scale": {"x": size / 8, "y": size / 8},
+                "omega": {"pulse": 2 * pi / 16, "self": 2 * pi / 8, "center": 0},
+                "shift": {"x": 0, "y": 0},
+                "phase": pi / 2,
+                "clr_min": Clr.k,
+                "clr_max": Clr.r,
+                "clr_mid": Clr.b
+            }
 
-}
+        )
+
+    }
 
 
 def pulsar(x, y, t, p):
@@ -177,5 +180,3 @@ def produce_pulsar(params, file_name, do_save_frames=False):
         f: Frame
         for i, f in enumerate(movie.film):
             f.write_gif(str(file_name) + "_" + str(i))
-
-
