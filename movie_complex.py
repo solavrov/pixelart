@@ -1,11 +1,12 @@
 from Movie import Movie
 from Frame import Frame
-from math import sin, cos, pi, exp, sqrt
+from math import sin, cos, pi, exp, sqrt, log
 from cmath import exp as c_exp
 from cmath import phase as arg
 from Clr import Clr
 from numpy import array
 from random import randrange as rnd
+from random import choice
 
 
 def f1(x, y, t):
@@ -60,31 +61,45 @@ def f5(x, y, t):
     return arg((z - r1) * (z - r2) * (z - r3) * (z - r4) * (z - r5))
 
 
+def f6(x, y, t):
+    a = b = 64
+    c = 2 * pi / 32
+    z = complex(x / a, y / b)
+    roots = rotate_roots([0.5176768, 0.497876876 * 1j, -0.47997234, -0.529823287 * 1j], c, t)
+    zz = 1
+    for i, r in enumerate(roots):
+        zz *= (z - r) ** ((-1) ** i)
+    return abs(arg(zz))
+
+
 def get_rand_roots(n):
-    roots = []
+    values = []
+    powers = []
     for _ in range(n):
-        roots.append((rnd(-200, 201) + rnd(-200, 201) * 1j) / 100)
-    return roots
+        values.append((rnd(-100, 100) + rnd(-100, 101) * 1j) / 111)
+        powers.append(choice([-3, -2, -1, 1, 2, 3]))
+    return {"val": values, "pow": powers}
 
 
 def rotate_roots(roots, omega, t):
     r = []
-    for i in range(0, len(roots)):
-        r.append(roots[i] * c_exp(((-1) ** i) * 1j * omega * t))
-    return r
+    for i in range(len(roots["val"])):
+        r.append(roots["val"][i] * c_exp(((-1) ** i) * 1j * omega * t))
+    return {"val": r, "pow": roots["pow"]}
 
 
 def gen_fun(num_roots):
     roots = get_rand_roots(num_roots)
+    print(roots)
 
     def f(x, y, t):
-        a = b = 64 - 8
+        a = b = 64
         c = 2 * pi / 32
         z = complex(x / a, y / b)
-        rotated_roots = rotate_roots(roots, c, t)
+        rot_roots = rotate_roots(roots, c, t)
         zz = 1
-        for r in rotated_roots:
-            zz *= (z - r)
+        for i in range(len(rot_roots["val"])):
+            zz *= (z - rot_roots["val"][i]) ** rot_roots["pow"][i]
         return abs(arg(zz))
 
     return f
