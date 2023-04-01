@@ -8,68 +8,13 @@ from numpy import array
 from random import randrange as rnd
 from random import choice
 
-
-def f1(x, y, t):
-    a = b = 64 - 8
-    c = 2 * pi / 32
-    z = complex(x / a, y / b)
-    return abs(cos(c * t) * (z ** 3 + 1j) + sin(c * t) * z * 2.5)
-
-
-def f2(x, y, t):
-    a = b = 64
-    c = 2 * pi / 32
-    z = complex(x / a, y / b)
-    r1 = c_exp(pi / 2 * 1j + 0 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r2 = c_exp(pi / 2 * 1j + 1 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r3 = c_exp(pi / 2 * 1j + 2 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r4 = c_exp(pi / 2 * 1j + 3 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r5 = c_exp(pi / 2 * 1j + 4 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    return abs((z - r1) * (z - r2) * (z - r3) * (z - r4) * (z - r5))
-
-
-def f3(x, y, t):
-    a = b = 64 - 8
-    c = 2 * pi / 32
-    z = complex(x / a, y / b)
-    return arg((cos(c * t) * (z ** 3 + 1j) + sin(c * t) * z * 2.5))
-
-
-def f4(x, y, t):
-    a = b = 64
-    c = 2 * pi / 32
-    z = complex(x / a, y / b)
-    r1 = c_exp(pi / 2 * 1j + 0 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r2 = c_exp(pi / 2 * 1j + 1 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r3 = c_exp(pi / 2 * 1j + 2 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r4 = c_exp(pi / 2 * 1j + 3 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r5 = c_exp(pi / 2 * 1j + 4 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    return arg((z - r1) * (z - r2) * (z - r3) * (z - r4) * (z - r5))
-
-
-def f5(x, y, t):
-    a = b = 64
-    c = 2 * pi / 32
-    c2 = c * 2
-    z = complex(x / a, y / b)
-    z = z * c_exp(1j * c2 * t)
-    r1 = c_exp(pi / 2 * 1j + 0 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r2 = c_exp(pi / 2 * 1j + 1 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r3 = c_exp(pi / 2 * 1j + 2 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r4 = c_exp(pi / 2 * 1j + 3 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    r5 = c_exp(pi / 2 * 1j + 4 * 2 * pi / 5 * 1j) * (cos(c * t) ** 1)
-    return arg((z - r1) * (z - r2) * (z - r3) * (z - r4) * (z - r5))
-
-
-def f6(x, y, t):
-    a = b = 64
-    c = 2 * pi / 32
-    z = complex(x / a, y / b)
-    roots = rotate_roots([0.5176768, 0.497876876 * 1j, -0.47997234, -0.529823287 * 1j], c, t)
-    zz = 1
-    for i, r in enumerate(roots):
-        zz *= (z - r) ** ((-1) ** i)
-    return abs(arg(zz))
+default_complex_params = {
+    "w": 128,
+    "h": 128,
+    "times": array(range(64)),
+    "fps": 20,
+    "omega": 2 * pi / 64
+}
 
 
 def get_rand_roots(n):
@@ -81,20 +26,21 @@ def get_rand_roots(n):
     return {"val": values, "pow": powers}
 
 
-def rotate_roots(roots, omega, t):
+def rotate_roots(roots, params, t):
     r = []
     for i in range(len(roots["val"])):
-        r.append(roots["val"][i] * c_exp(((-1) ** i) * 1j * omega * t))
+        r.append(roots["val"][i] * c_exp(((-1) ** i) * 1j * params["omega"] * t))
     return {"val": r, "pow": roots["pow"]}
 
 
-def gen_fun(num_roots):
+def gen_fun(num_roots, params):
     roots = get_rand_roots(num_roots)
     print(roots)
 
     def f(x, y, t):
-        a = b = 64
-        c = 2 * pi / 32
+        a = params["w"] / 2
+        b = params["h"] / 2
+        c = params["omega"]
         z = complex(x / a, y / b)
         rot_roots = rotate_roots(roots, c, t)
         zz = 1
