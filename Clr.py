@@ -47,14 +47,3 @@ class Clr:
         g = rg_rounds[c[1] // 43]
         b = b_rounds[c[2] // 37]
         return array([r, g, b])
-
-
-
-
-
-
-
-
-
-
-
