@@ -13,7 +13,7 @@ from random import uniform
 
 class Root:
 
-    def __init__(self, value, power, rotate, phi=0.0):
+    def __init__(self, value, power, rotate, phi=None):
         self.value = value
         self.power = power
         self.rot = rotate
@@ -48,8 +48,12 @@ class Studio1:
         self.roots: [Root] = []
         self.func = None
 
-    def append_root(self, root, power, rotate):
-        self.roots.append(Root(root, power, rotate))
+    @staticmethod
+    def infinity(phi):
+        return complex(cos(phi), sin(phi) * cos(phi)) * 1
+
+    def append_root(self, root, power, rotate, phi=None):
+        self.roots.append(Root(root, power, rotate, phi))
         return self
 
     def set_num_of_frames(self, n):
@@ -114,7 +118,7 @@ class Studio1:
         self.roots = []
         for _ in range(n):
             phi = uniform(0, 2 * pi)
-            v = complex(cos(phi), sin(phi) * cos(phi)) * 3 / 4
+            v = Studio1.infinity(phi)
             self.roots.append(Root(v, choice(self.pow_set), choice(self.rot_set), phi))
 
     def rotate_roots_inf(self, t):
@@ -123,9 +127,12 @@ class Studio1:
         else:
             rotated_roots = []
             for r in self.roots:
-                phi = r.phi + r.rot * self.omega * t
-                v = complex(cos(phi), sin(phi) * cos(phi)) * 3 / 4
-                rotated_roots.append(Root(v, r.power, r.rot, phi))
+                if r.phi is not None:
+                    phi = r.phi + r.rot * self.omega * t
+                    v = Studio1.infinity(phi)
+                    rotated_roots.append(Root(v, r.power, r.rot, phi))
+                else:
+                    rotated_roots.append(r)
             return rotated_roots
 
     def make_func_inf(self):

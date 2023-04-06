@@ -2,6 +2,7 @@ from Clr import Clr
 from math import sin, cos, pi, exp, sqrt, log
 from cmath import exp as c_exp
 from Studio1 import Studio1
+from random import choice
 
 s = Studio1()
 
@@ -18,6 +19,17 @@ s = Studio1()
 # s.produce_frame(0, "frameX")
 # s.produce("complex8")
 
-s.produce_rand_inf(10, "complex_inf_1")
+n = 10
+for i in range(n):
+    phi = i / n * 2 * pi
+    s.append_root(Studio1.infinity(phi), 2, 1, phi)
+
+s.append_root(-1/2, -5, 0)
+s.append_root(1/2, -5, 0)
+
+s.make_func_inf()
+s.produce("complex_inf_3")
+
+
 
 
